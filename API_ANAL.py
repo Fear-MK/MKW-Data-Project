@@ -1,5 +1,10 @@
-from MKTBAPI import *
-from MKOBJECT import *
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+from collections import defaultdict
+
+
+import MKTBAPI
 
 
 def track_picks(matches):
@@ -14,17 +19,12 @@ def track_picks(matches):
 
     ds_track = pd.Series(track_dict).sort_values(ascending=False)
 
-    print(ds_track)
+    return ds_track
 
 
 def match_graph(match, df_team):
 
-    points_t1 = 0
-    points_t2 = 0
-    gp_t1 = 0
-    gp_t2 = 0
-    difs = [0]
-    gps = [0]
+    points_t1, points_t2, gp_t1, gp_t2, difs, gps = 0, 0, 0, 0, [0], [0]
 
     ds_teams = list(df_team.loc[:, 'Mii Tag'])
 
@@ -125,7 +125,7 @@ def match_graph(match, df_team):
 
 
 def main():
-    matches, player_alls, team_alls, p_ids, t_ids, df_player, df_team = api_crucial()
+    matches, player_alls, team_alls, p_ids, t_ids, df_player, df_team = MKTBAPI.api_crucial()
 
     for match in matches:
         match.small_print()
